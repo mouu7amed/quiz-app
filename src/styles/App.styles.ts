@@ -76,6 +76,7 @@ export const Wrapper = styled.div`
   .start-card .amount,
   .start-card .options {
     width: 40%;
+    height: 42px;
     padding: 0.3rem 0.5rem;
     margin-bottom: 1rem;
     outline: none;
