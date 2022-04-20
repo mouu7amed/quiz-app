@@ -15,11 +15,19 @@ export const QuestionCard = ({
   callback,
   userAnswer,
 }: QuestionCardProps) => {
+  const questionResult = question.replace(
+    /&quot;|&#039;|&shy;|&oacute;|&eacute;|&aacute;|&ocirc;|&rsquo;|&amp;|&ntilde;/gi,
+    ""
+  );
   return (
     <div className="questions-card">
-      <p className="question">{question}</p>
+      <p className="question">{questionResult}</p>
       <div className="answers">
         {answers.map((answer) => {
+          const answerResult = answer.replace(
+            /&quot;|&#039;|&shy;|&oacute;|&eacute;|&aacute;|&ocirc;|&rsquo;|&amp;|&ntilde;/gi,
+            ""
+          );
           return (
             <AnswerWrapper
               key={answer}
@@ -31,7 +39,7 @@ export const QuestionCard = ({
                 value={answer}
                 disabled={userAnswer ? true : false}
               >
-                {answer}
+                {answerResult}
               </button>
             </AnswerWrapper>
           );

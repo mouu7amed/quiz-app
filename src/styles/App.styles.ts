@@ -29,15 +29,15 @@ export const Wrapper = styled.div`
   background-color: #fafafa;
   margin: 1rem;
   border-radius: 0.5rem;
-  min-width: 50vw;
+  width: 50vw;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 
   @media (max-width: 991px) {
-    min-width: 70vw;
+    width: 70vw;
   }
   @media (max-width: 676px) {
-    min-width: 90vw;
+    width: 90vw;
   }
   /* Start Head */
   .head {
@@ -52,13 +52,6 @@ export const Wrapper = styled.div`
     border-top-left-radius: 0.5rem;
     overflow: hidden;
   }
-
-  .head .quiz-progress {
-    height: 1rem;
-    width: 40%;
-    background-color: #7f7f7f;
-    border-radius: 1rem;
-  }
   /* End Head */
 
   /* Start Question Card */
@@ -72,6 +65,7 @@ export const Wrapper = styled.div`
     border-top: 1px solid #dbdbdb;
     border-bottom: 1px solid #dbdbdb;
     width: 100%;
+    overflow: hidden;
   }
   .start-card .amount,
   .start-card .options {
@@ -89,6 +83,13 @@ export const Wrapper = styled.div`
     .start-card .options {
       width: 50%;
     }
+  }
+  .questions-card .question {
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    text-align: center;
+    /* word-break: break-all; */
+    white-space: normal;
   }
   .questions-card .answers {
     display: flex;
@@ -111,11 +112,6 @@ export const Wrapper = styled.div`
   }
   .start-card .start:hover {
     background-color: #3b59ff;
-  }
-  .questions-card .question {
-    font-size: 1.3rem;
-    padding: 0.5rem;
-    text-align: center;
   }
   /* End Question Card */
 
@@ -208,5 +204,83 @@ export const AnswerWrapper = styled.div<answerWrapperProps>`
 
   button:hover {
     opacity: 0.6;
+  }
+`;
+
+type ProgressProps = {
+  progress: number;
+};
+
+export const ProgressWrapper = styled.div<ProgressProps>`
+  height: 1rem;
+  width: 40%;
+  background-color: #dbdbdb;
+  border-radius: 1rem;
+
+  .live-progress {
+    height: 100%;
+    border-radius: 1rem;
+    background-color: #3b59ff;
+    width: ${({ progress }) => `${progress}%`};
+  }
+`;
+
+type ResultWrapperProps = {
+  success: boolean;
+};
+
+export const ResultWrapper = styled.div<ResultWrapperProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background-color: rgb(0 0 0 / 60%);
+
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+    width: 30%;
+    height: 30%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    color: black;
+    background-color: #fff;
+  }
+
+  @media (max-width: 767px) {
+    .box {
+      width: 60%;
+      height: 40%;
+    }
+  }
+
+  .box .close {
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 0.3rem 1rem;
+    margin: 0.5rem;
+    transition: 0.3s;
+    background-color: ${({ success }) => (success ? "#43978d" : "#d45769")};
+  }
+  .box .close:hover {
+    background-color: #3b59ff;
+  }
+  .box .result-score {
+    font-weight: bold;
+  }
+  .box .result-state {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: ${({ success }) => (success ? "#43978d" : "#d45769")};
   }
 `;

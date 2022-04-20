@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from "react";
 import { Foot } from "./components/Foot";
 import { Head } from "./components/Head";
+import { Loading } from "./components/Loading";
 import { QuestionCard } from "./components/QuestionCard";
+import { Result } from "./components/Result";
 import { StartCard } from "./components/StartCard";
 import { FetchQuestions, QuestionState } from "./helpers/API";
 import { GlobalStyle, Wrapper } from "./styles/App.styles";
@@ -13,14 +15,10 @@ export type AnswerObject = {
   correctAnswer: string;
 };
 
-const error = "";
-
 function App() {
-  const [amount, setAmount] = useState<number>(10);
-  const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">(
-    "easy"
-  );
-  const [quesType, setQuesType] = useState<"multiple" | "boolean">("multiple");
+  const [amount, setAmount] = useState<any>(10);
+  const [difficulty, setDifficulty] = useState<any>("easy");
+  const [quesType, setQuesType] = useState<any>("multiple");
 
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
@@ -29,13 +27,13 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  const amountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(parseInt(e.target.value));
+  const amountHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAmount(e.target.value);
   };
-  const difficultyHandler = (e: any) => {
+  const difficultyHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDifficulty(e.target.value);
   };
-  const quesTypeHandler = (e: any) => {
+  const quesTypeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setQuesType(e.target.value);
   };
 
@@ -93,10 +91,9 @@ function App() {
             userAnswer={userAnswers ? userAnswers[number] : undefined}
             callback={checkAnswer}
           />
-        ) : (
+        ) : !loading && gameOver ? (
           <StartCard
             gameOver={gameOver}
-            loading={loading}
             userAnswers={userAnswers}
             TOTAL_QUESTIONS={amount}
             startQuizHandler={startQuizHandler}
@@ -105,7 +102,18 @@ function App() {
             difficultyHandler={difficultyHandler}
             quesTypeHandler={quesTypeHandler}
           />
-        )}
+        ) : null}
+
+        {loading && <Loading />}
+
+        {!gameOver && !loading ? (
+          <Result
+            amount={amount}
+            score={score}
+            userAnswers={userAnswers}
+            setGameOver={setGameOver}
+          />
+        ) : null}
 
         <Foot
           nextQuizHandler={nextQuizHandler}

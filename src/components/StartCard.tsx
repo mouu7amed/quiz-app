@@ -1,5 +1,4 @@
 import { AnswerObject } from "../App";
-import { Loading } from "./Loading";
 import { Fragment } from "react";
 
 type startCardType = {
@@ -7,11 +6,10 @@ type startCardType = {
   userAnswers: AnswerObject[];
   TOTAL_QUESTIONS: number;
   startQuizHandler: () => Promise<void>;
-  loading: boolean;
   amount: number;
-  amountHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  difficultyHandler: (e: any) => void;
-  quesTypeHandler: (e: any) => void;
+  amountHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  difficultyHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  quesTypeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export const StartCard = ({
@@ -19,8 +17,6 @@ export const StartCard = ({
   userAnswers,
   TOTAL_QUESTIONS,
   startQuizHandler,
-  loading,
-  amount,
   amountHandler,
   difficultyHandler,
   quesTypeHandler,
@@ -29,15 +25,16 @@ export const StartCard = ({
     <div className="start-card">
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <Fragment>
-          <input
-            type="number"
-            value={amount}
-            className="amount"
-            min="10"
-            max="50"
-            placeholder="Amount (10-50)"
+          <select
+            className="options"
+            placeholder="Amount"
             onChange={amountHandler}
-          />
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+          </select>
+
           <select
             className="options"
             placeholder="Difficulty"
@@ -47,6 +44,7 @@ export const StartCard = ({
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
+
           <select
             className="options"
             placeholder="Type"
@@ -60,8 +58,6 @@ export const StartCard = ({
           </button>
         </Fragment>
       ) : null}
-
-      {loading && <Loading />}
     </div>
   );
 };

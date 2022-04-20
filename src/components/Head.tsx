@@ -1,3 +1,5 @@
+import { ProgressWrapper } from "../styles/App.styles";
+
 type headPropsTypes = {
   gameOver: boolean;
   loading: boolean;
@@ -13,13 +15,16 @@ export const Head = ({
   questionNum,
   totalQuestions,
 }: headPropsTypes) => {
+  const progress: number = (questionNum * 100) / totalQuestions;
   return (
     <div className="head">
       <h1>React Quiz</h1>
 
       {!loading && !gameOver && (
         <>
-          <div className="quiz-progress"></div>
+          <ProgressWrapper progress={progress}>
+            <div className="live-progress"></div>
+          </ProgressWrapper>
           <p className="number">
             Question: {questionNum} / {totalQuestions}
           </p>
